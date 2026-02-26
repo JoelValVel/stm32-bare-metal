@@ -1,0 +1,27 @@
+# --- Carpeta del compilador ---
+.metadata/
+# --- Archivos de Compilación (Cualquier subcarpeta) ---
+**/Debug/
+**/Release/
+**/obj/
+**/lst/
+
+# --- Binarios y ejecutables generados ---
+*.elf
+*.bin
+*.hex
+*.map
+*.o
+*.su
+*.d
+
+# --- Archivos temporales y de sistema ---
+*.tmp
+*.bak
+*.log
+.DS_Store
+Thumbs.db
+
+# --- Archivos específicos de CubeMX ---
+# Se recomienda guardar el .ioc, pero ignorar los reportes temporales
+.mxproject
