@@ -1,4 +1,4 @@
-\# STM32 Professional Firmware Development
+# STM32 Professional Firmware Development
 
 
 
@@ -6,17 +6,17 @@ Este repositorio contiene mi progreso en el dominio de microcontroladores STM32 
 
 
 
-\##  Hardware
+##  Hardware
 
-\* \*\*Board:\*\* Nucleo-F446RE 
+* **Board:** Nucleo-F446RE 
 
-\* \*\*MCU:\*\* STM32F446RE (Cortex-M4)
+* **MCU:** STM32F446RE (Cortex-M4)
 
 
 
-\## 📚 Contenido
+## 📚 Contenido
 
-\- Drivers desde cero.
+- Drivers desde cero.
 
 
 
