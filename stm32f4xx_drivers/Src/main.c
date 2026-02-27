@@ -16,15 +16,19 @@
  ******************************************************************************
  */
 
+
 #include <stdint.h>
-#include <stm32f446xx.h>
+#include "stm32f446xx.h"
+#include "stm32f446xx_gpio.h"
+#include "led_board.h"
+
 
 
 int main(void)
 {
-	GPIOA->MODER |= (1<<10);
+
     /* Loop forever */
 	while(1){
-
+		LED_BOARD_toggle();
 	};
 }

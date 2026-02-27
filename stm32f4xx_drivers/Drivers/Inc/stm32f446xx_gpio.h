@@ -50,10 +50,10 @@ typedef enum{
 }GPIO_AltFun_t;
 
 typedef enum{
-	GPIO_LS,	//Low speed
-	GPIO_MS,	// Medium speed
-	GPIO_FS,	// Fast speed
-	GPIO_HS,	// High speed
+	GPIO_Speed_LS,	//Low speed
+	GPIO_Speed_MS,	// Medium speed
+	GPIO_Speed_FS,	// Fast speed
+	GPIO_Speed_HS,	// High speed
 }GPIO_Speed_t;
 
 typedef enum{

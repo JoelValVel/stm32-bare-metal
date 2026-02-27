@@ -5,6 +5,7 @@
 **/Release/
 **/obj/
 **/lst/
+**/.settings/
 
 # --- Binarios y ejecutables generados ---
 *.elf
