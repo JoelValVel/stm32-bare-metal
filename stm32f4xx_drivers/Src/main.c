@@ -17,23 +17,14 @@
  */
 
 #include <stdint.h>
-
+#include <stm32f446xx.h>
 
 
 int main(void)
 {
-	//Activar el reloj del GPIOA (b0 = 1) RCC_AHB1ENR
-	 *(uint32_t *)0x40023830UL |= (1 << 0);
-
-	 // Establecer general p. output bit 5 (b11-10 = 01)del GPIOA GPIOA_MODER
-	 *(uint32_t *)0x40020000UL |= (1 << 10);
-
+	GPIOA->MODER |= (1<<10);
     /* Loop forever */
 	while(1){
-		// Poner en alto el bit 5 del GPIOA (b5 = 1) GPIOA_ODR)
-		 *(uint32_t *)0x40020014UL |= (1 << 5);
 
-		 // Poner en bajo el bit 5 del GPIOA (b5 = 1) GPIOA_ODR)
-		  *(uint32_t *)0x40020014UL &= ~(1 << 5);
 	};
 }
