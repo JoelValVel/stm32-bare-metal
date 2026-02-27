@@ -21,14 +21,15 @@
 #include "stm32f446xx.h"
 #include "stm32f446xx_gpio.h"
 #include "led_board.h"
-
+#include "button_board.h"
 
 
 int main(void)
 {
-
+	LED_BOARD_init();
+	BUTTON_BOARD_init();
     /* Loop forever */
 	while(1){
-		LED_BOARD_toggle();
+		if(BUTTON_BOARD_read()) LED_BOARD_toggle();
 	};
 }

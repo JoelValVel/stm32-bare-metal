@@ -13,7 +13,9 @@
 #define DISABLE 0
 
 #define AHB1PERIPH_BASEADDR			0x40020000UL
+#define APB2PERIPH_BASEADDR			0x40010000UL
 
+/*----------------------- GPIO ----------------------------------*/
 #define GPIOA_BASEADDR				(AHB1PERIPH_BASEADDR + 0x0000)
 #define GPIOB_BASEADDR				(AHB1PERIPH_BASEADDR + 0x0400)
 #define GPIOC_BASEADDR				(AHB1PERIPH_BASEADDR + 0x0800)
@@ -23,9 +25,17 @@
 #define GPIOG_BASEADDR				(AHB1PERIPH_BASEADDR + 0x1800)
 #define GPIOH_BASEADDR				(AHB1PERIPH_BASEADDR + 0x1C00)
 
+/*------------------------- RCC ----------------------------------*/
 #define RCC_BASEADDR				(AHB1PERIPH_BASEADDR + 0x3800)
 
-/* Estructuras de periféricos*/
+
+/*----------------------- Interrupt ----------------------------------*/
+#define SYSCFG_BASEADDR				(APB2PERIPH_BASEADDR + 0x3800)
+#define EXTI_BASEADDR				(APB2PERIPH_BASEADDR + 0x3C00)
+
+
+
+/* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
 	volatile uint32_t OTYPER;
@@ -38,6 +48,8 @@ typedef struct {
 	volatile uint32_t AFR[2];
 }GPIO_RegDef_t;
 
+
+/* ---------------------- REGISTROS RCC --------------------------*/
 typedef struct{
 	volatile uint32_t CR;            // 0x00 - Clock control register
 	    volatile uint32_t PLLCFGR;       // 0x04 - PLL configuration register
@@ -75,6 +87,33 @@ typedef struct{
 	    volatile uint32_t DCKCFGR2;      // 0x94 - Dedicated clocks configuration register 2
 }RCC_Reg_Def_t;
 
+/* ---------------------- REGISTROS EXTI --------------------------*/
+typedef struct{
+	volatile uint32_t	IMR;
+	volatile uint32_t 	EMR;
+	volatile uint32_t	RTSR;
+	volatile uint32_t	FTSR;
+	volatile uint32_t	SWIER;
+	volatile uint32_t	PR;
+}EXTI_Reg_Def_t;
+
+/* ---------------------- REGISTROS SYSCFG --------------------------*/
+typedef struct{
+	volatile uint32_t	MEMRMP;
+	volatile uint32_t	PMC;
+	volatile uint32_t	EXTICR1;
+	volatile uint32_t	EXTICR2;
+	volatile uint32_t	EXTICR3;
+	volatile uint32_t	EXTICR4;
+	uint32_t 			RES0[2];
+	volatile uint32_t	CMPCR;
+	uint32_t 			RES1[2];
+	volatile uint32_t	CFGR;
+}SYSCFG_Reg_Def_t;
+
+
+/* --------------- Definición de periféricos -------------------*/
+/*								GPIO							*/
 #define GPIOA			((GPIO_RegDef_t * ) GPIOA_BASEADDR)
 #define GPIOB			((GPIO_RegDef_t * ) GPIOB_BASEADDR)
 #define GPIOC			((GPIO_RegDef_t * ) GPIOC_BASEADDR)
@@ -84,7 +123,16 @@ typedef struct{
 #define GPIOG			((GPIO_RegDef_t * ) GPIOG_BASEADDR)
 #define GPIOH			((GPIO_RegDef_t * ) GPIOH_BASEADDR)
 
+
+/*								RCC							*/
 #define RCC				((RCC_Reg_Def_t *) RCC_BASEADDR)
+
+/*								EXTI							*/
+#define EXTI			((EXTI_Reg_Def_t *) EXTI_BASEADDR)
+
+/*								SYSCFG							*/
+#define SYSCFG			((SYSCFG_Reg_Def_t *) SYSCFG_BASEADDR)
+
 
 /* Habilitar clock de perifericos */
 #define GPIOA_CLCK_EN()		(RCC->AHB1ENR |= (1<<0))
@@ -96,6 +144,9 @@ typedef struct{
 #define GPIOG_CLCK_EN()		(RCC->AHB1ENR |= (1<<6))
 #define GPIOH_CLCK_EN()		(RCC->AHB1ENR |= (1<<7))
 
+#define SYSCFG_CLCK_EN()	(RCC->APB2ENR |= (1<<14))
+
+
 /* Deshabilitar clock perifericos */
 #define GPIOA_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 0))
 #define GPIOB_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 1))
@@ -106,6 +157,8 @@ typedef struct{
 #define GPIOG_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 6))
 #define GPIOH_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 7))
 
+#define SYSCFG_CLCK_DIS()	(RCC->APB2ENR &= ~(1<<14))
+
 #define GPIOA_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 0)); (RCC->AHB1RSTR &= ~(1 << 0)); } while(0)
 #define GPIOB_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 1)); (RCC->AHB1RSTR &= ~(1 << 1)); } while(0)
 #define GPIOC_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 2)); (RCC->AHB1RSTR &= ~(1 << 2)); } while(0)
@@ -115,4 +168,5 @@ typedef struct{
 #define GPIOG_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 6)); (RCC->AHB1RSTR &= ~(1 << 6)); } while(0)
 #define GPIOH_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); } while(0)
 
+#define SYSCFG_REG_RESET()	 do { (RCC->APB2RSTR |= (1 << 14)); (RCC->APB2RSTR &= ~(1 << 14); }while(0);
 #endif /* DRIVERS_INC_STM32F446XX_H_ */
