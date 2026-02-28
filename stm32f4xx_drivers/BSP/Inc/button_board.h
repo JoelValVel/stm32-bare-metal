@@ -13,7 +13,7 @@
 
 void BUTTON_BOARD_init(void);
 uint8_t BUTTON_BOARD_read(void);
-
-
+extern uint8_t button_pressed_f;
+void EXTI15_10_IRQHandler(void);
 
 #endif /* INC_BUTTON_BOARD_H_ */

@@ -30,6 +30,9 @@ int main(void)
 	BUTTON_BOARD_init();
     /* Loop forever */
 	while(1){
-		if(BUTTON_BOARD_read()) LED_BOARD_toggle();
+		if(button_pressed_f){
+			LED_BOARD_toggle();
+			button_pressed_f = 0;
+		}
 	};
 }

@@ -33,8 +33,17 @@
 #define SYSCFG_BASEADDR				(APB2PERIPH_BASEADDR + 0x3800)
 #define EXTI_BASEADDR				(APB2PERIPH_BASEADDR + 0x3C00)
 
+/* ------------------------ NVIC ----------------------------------- */
+#define NVIC_ISER0					(*((volatile uint32_t *)0xE000E100UL))
+#define NVIC_ISER1					(*((volatile uint32_t *)0xE000E104UL))
+#define NVIC_ISER2					(*((volatile uint32_t *)0xE000E108UL))
 
+#define NVIC_ICER0					(*((volatile uint32_t *)0xE000E180UL))
+#define NVIC_ICER1					(*((volatile uint32_t *)0xE000E184UL))
+#define NVIC_ICER2					(*((volatile uint32_t *)0xE000E188UL))
 
+#define NVIC_IPR_BASEADDR			0XE000E400UL
+#define IRQ_EXTI15_10				40
 /* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
@@ -101,10 +110,7 @@ typedef struct{
 typedef struct{
 	volatile uint32_t	MEMRMP;
 	volatile uint32_t	PMC;
-	volatile uint32_t	EXTICR1;
-	volatile uint32_t	EXTICR2;
-	volatile uint32_t	EXTICR3;
-	volatile uint32_t	EXTICR4;
+	volatile uint32_t	EXTICR[4];
 	uint32_t 			RES0[2];
 	volatile uint32_t	CMPCR;
 	uint32_t 			RES1[2];
@@ -169,4 +175,16 @@ typedef struct{
 #define GPIOH_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); } while(0)
 
 #define SYSCFG_REG_RESET()	 do { (RCC->APB2RSTR |= (1 << 14)); (RCC->APB2RSTR &= ~(1 << 14); }while(0);
+/* Comprobación número de puerto */
+#define PORT_NUMBER(x)		 ((x==GPIOA) ? 0 : \
+							  (x==GPIOB) ? 1 : \
+							  (x==GPIOC) ? 2 : \
+							  (x==GPIOD) ? 3 : \
+							  (x==GPIOE) ? 4 : \
+							  (x==GPIOF) ? 5 : \
+							  (x==GPIOG) ? 6 : 7)
+
+
+
+
 #endif /* DRIVERS_INC_STM32F446XX_H_ */
