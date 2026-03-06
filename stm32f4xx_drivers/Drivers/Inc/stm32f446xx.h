@@ -9,11 +9,20 @@
 #define DRIVERS_INC_STM32F446XX_H_
 #include <stdint.h>
 
+void assert_failed(uint8_t *file, uint8_t line);
+
+#define ASSERT_TRUE(expr)	((expr) ? (void)0 : assert_failed((uint8_t * )__FILE__, __LINE__))
+#define ASSERT_FALSE(expr)	(!(expr) ? (void)0 : assert_failed((uint8_t * )__FILE__, __LINE__))
+
 #define ENABLE 1
 #define DISABLE 0
 
+#define HSE_FREQ	((uint32_t) 8000000)
+#define HSI_FREQ	((uint32_t) 16000000)
+
 #define AHB1PERIPH_BASEADDR			0x40020000UL
 #define APB2PERIPH_BASEADDR			0x40010000UL
+#define APB1PERIPH_BASEADDR			0x40000000UL
 
 /*----------------------- GPIO ----------------------------------*/
 #define GPIOA_BASEADDR				(AHB1PERIPH_BASEADDR + 0x0000)
@@ -44,6 +53,9 @@
 
 #define NVIC_IPR_BASEADDR			0XE000E400UL
 #define IRQ_EXTI15_10				40
+
+/* ------------------------ POWER CONTROLLER ----------------------------------- */
+#define PWR_BASEADDR				(AHB1PERIPH_BASEADDR + 0x7000)
 /* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
@@ -60,7 +72,7 @@ typedef struct {
 
 /* ---------------------- REGISTROS RCC --------------------------*/
 typedef struct{
-	volatile uint32_t CR;            // 0x00 - Clock control register
+		volatile uint32_t CR;            // 0x00 - Clock control register
 	    volatile uint32_t PLLCFGR;       // 0x04 - PLL configuration register
 	    volatile uint32_t CFGR;          // 0x08 - Clock configuration register
 	    volatile uint32_t CIR;           // 0x0C - Clock interrupt register
@@ -117,6 +129,11 @@ typedef struct{
 	volatile uint32_t	CFGR;
 }SYSCFG_Reg_Def_t;
 
+/* ---------------------- REGISTROS PWR --------------------------*/
+typedef struct{
+	volatile uint32_t CR;
+	volatile uint32_t CSR;
+}PWR_Reg_Def_t;
 
 /* --------------- Definición de periféricos -------------------*/
 /*								GPIO							*/
@@ -139,6 +156,8 @@ typedef struct{
 /*								SYSCFG							*/
 #define SYSCFG			((SYSCFG_Reg_Def_t *) SYSCFG_BASEADDR)
 
+/*							PWR									*/
+#define PWR				((PWR_Reg_Def_t *) PWR_BASEADDR)
 
 /* Habilitar clock de perifericos */
 #define GPIOA_CLCK_EN()		(RCC->AHB1ENR |= (1<<0))
@@ -152,6 +171,7 @@ typedef struct{
 
 #define SYSCFG_CLCK_EN()	(RCC->APB2ENR |= (1<<14))
 
+#define PWR_CLCK_EN()		(RCC->APB1ENR) |= (1<<28)
 
 /* Deshabilitar clock perifericos */
 #define GPIOA_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 0))
@@ -184,7 +204,53 @@ typedef struct{
 							  (x==GPIOF) ? 5 : \
 							  (x==GPIOG) ? 6 : 7)
 
+#define RCC_CR_HSION			 0
+#define RCC_CR_HSIRDY			 1
+#define RCC_CR_HSITRIM			 3
+#define RCC_CR_HSICAL			 8
+#define RCC_CR_HSEON			16
+#define RCC_CR_HSERDY			17
+#define RCC_CR_HSEBYP			18
+#define RCC_CR_CSSON			19
+#define RCC_CR_PLLON			24
+#define RCC_CR_PLLRDY			25
+#define RCC_CR_PLLI2SON			26
+#define RCC_CR_PLLI2SRDY		27
+#define RCC_CR_PLLSAION			28
+#define RCC_CR_PLLSAIRDY		29
 
+#define RCC_PLLCFGR_PLLM		 0
+#define RCC_PLLCFGR_PLLN		 6
+#define RCC_PLLCFGR_PLLP		16
+#define RCC_PLLCFGR_PLLSRC		22
+#define RCC_PLLCFGR_PLLQ		24
+#define RCC_PLLCFGR_PLLR		28
+
+#define RCC_CFGR_SW				 0
+#define RCC_CFGR_SWS			 2
+#define RCC_CFGR_HPRE			 4
+#define RCC_CFGR_PPRE1			10
+#define RCC_CFGR_PPRE2			13
+#define RCC_CFGR_RTCPRE			16
+#define RCC_CFGR_MCO1			21
+#define RCC_CFGR_MCO1PRE		24
+#define RCC_CFGR_MCO2PRE		27
+#define RCC_CFGR_MCO2			30
+
+#define RCC_BDCR_LSEON			 0
+#define RCC_BDCR_LSERDY			 1
+#define RCC_BDCR_LSEBYP			 2
+#define RCC_BDCR_LSEMOD			 3
+#define RCC_BDCR_RTCSEL			 8
+#define RCC_BDCR_RTCEN			15
+#define RCC_BDCR_BDRST			16
+
+#define RCC_CSR_LSION			 0
+#define RCC_CSR_LSIRDY			 1
+#define RCC_CSR_IWDGRSTF		29
+#define RCC_CSR_WWDGRSTF		30
+
+#define PWR_CR_DBP				 8
 
 
 #endif /* DRIVERS_INC_STM32F446XX_H_ */
