@@ -14,7 +14,7 @@ Este repositorio contiene mi progreso en el dominio de microcontroladores STM32 
 
 
 
-## 📚 Contenido
+##  Contenido
 
 - Drivers desde cero.
 
