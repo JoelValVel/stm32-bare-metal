@@ -1,33 +1,13 @@
-#include "stm32f446xx_rcc.h"
-#include "stm32f446xx_gpio.h"
-#include "stm32f446xx.h"
-#include "RCC_config_app.h"
+#include "RCC_config_BSP.h"
 
-void assert_failed(uint8_t *file, uint8_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
     while(1);   // Queda atrapado aquí si un assert falla
 }
 
-void GPIO_setup(void){
-	GPIO_handle_t PC10_debug;
-	PC10_debug.pGPIOx = GPIOC;
-	PC10_debug.GPIO_config.GPIO_pin = GPIO_PIN_10;
-	PC10_debug.GPIO_config.GPIO_Mode = GPIO_Mode_OUT;
-	PC10_debug.GPIO_config.GPIO_OType = GPIO_OType_PP;
-	PC10_debug.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
-	PC10_debug.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
-	GPIO_Init(&PC10_debug);
 
-	GPIO_handle_t PA8_MCO1;
-	PA8_MCO1.pGPIOx = GPIOA;
-	PA8_MCO1.GPIO_config.GPIO_pin = GPIO_PIN_8;
-	PA8_MCO1.GPIO_config.GPIO_Mode = GPIO_Mode_AF;
-	PA8_MCO1.GPIO_config.GPIO_OType = GPIO_OType_PP;
-	PA8_MCO1.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
-	PA8_MCO1.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
-	PA8_MCO1.GPIO_config.GPIO_AltFun = GPIO_ALTFUN_0;
-	GPIO_Init(&PA8_MCO1);
-}
+
+
  void SYSCLK_HSE_setup(void){
 	 // Habilitar HSE
 	 RCC_HSEConfig(RCC_HSE_ON);
@@ -57,6 +37,10 @@ void GPIO_setup(void){
 	 PLLP = 2;
 	 PLLQ = 7;
 	 PLLR = 5;
+
+	 //Configurar el APB1 y APB2
+	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4);
+	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2);
 	 // Habilitar HSE
 	 RCC_HSEConfig(RCC_HSE_ON);
 

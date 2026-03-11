@@ -99,8 +99,8 @@ void GPIO_WritePort(GPIO_RegDef_t *pGPIOx, uint16_t data);
 
 void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, GPIO_Pin_t pin);
 
-void GPIO_NVIC_IRQ_Enable(uint8_t IRQ);
-void GPIO_NVIC_IRQ_Disable(uint8_t IRQ);
-void GPIO_NVIC_Priority(uint8_t IRQ, uint32_t priority);
+//void GPIO_NVIC_IRQ_Enable(uint8_t IRQ);
+//void GPIO_NVIC_IRQ_Disable(uint8_t IRQ);
+//void GPIO_NVIC_Priority(uint8_t IRQ, uint32_t priority);
 void GPIO_IRQHandler(uint8_t pin);
 #endif /* DRIVERS_INC_STM32F446XX_GPIO_H_ */

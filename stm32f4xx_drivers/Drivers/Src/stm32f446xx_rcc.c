@@ -254,4 +254,22 @@ uint32_t RCC_GetAPB2CLK(void){
 	APB2_prescaler_value = APB_prescaler[APB2_prescaler_bits];
 	return RCC_GetAHBCLK()/APB2_prescaler_value;
 }
+uint32_t RCC_GetAPB1_TimerCLK(void){
+	uint32_t APB1_prescaler_bits;
+	APB1_prescaler_bits = ((RCC->CFGR >> RCC_CFGR_PPRE1) & 0x07);
+	if(APB1_prescaler_bits == RCC_APB_Prescaler_None){
+		return RCC_GetAPB1CLK();
+	}else{
+		return RCC_GetAPB1CLK()*2;
+	}
+}
+uint32_t RCC_GetAPB2_TimerCLK(void){
+	uint32_t APB2_prescaler_bits;
+	APB2_prescaler_bits = ((RCC->CFGR >> RCC_CFGR_PPRE2) & 0x07);
+	if(APB2_prescaler_bits == RCC_APB_Prescaler_None ){
+		return RCC_GetAPB2CLK();
+	}else{
+		return RCC_GetAPB2CLK()*2;
+	}
+}
 

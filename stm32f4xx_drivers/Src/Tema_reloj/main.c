@@ -2,8 +2,8 @@
 #include "stm32f446xx.h"
 #include "stm32f446xx_gpio.h"
 #include "stm32f446xx_rcc.h"
-#include "RCC_config_app.h"
-
+#include "RCC_config_BSP.h"
+#include "GPIO_BSP.h"
 void delay(uint32_t cnt)
 {
 	while(cnt)
@@ -12,8 +12,9 @@ void delay(uint32_t cnt)
 
 int main(void){
 	uint32_t freq;
-	GPIO_setup();
 
+	RCC_debug_GPIO_setup();
+	TIM2_CH2IC_GPIO_Init();
 	delay(500000);
 
 	/*********************** HSE ***********************/

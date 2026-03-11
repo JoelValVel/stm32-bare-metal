@@ -9,10 +9,10 @@
 #define DRIVERS_INC_STM32F446XX_H_
 #include <stdint.h>
 
-void assert_failed(uint8_t *file, uint8_t line);
+void assert_failed(uint8_t *file, uint32_t line);
 
 #define ASSERT_TRUE(expr)	((expr) ? (void)0 : assert_failed((uint8_t * )__FILE__, __LINE__))
-#define ASSERT_FALSE(expr)	(!(expr) ? (void)0 : assert_failed((uint8_t * )__FILE__, __LINE__))
+#define ASSERT_FALSE(expr)	((expr) ?  assert_failed((uint8_t * )__FILE__, __LINE__): (void)0 )
 
 #define ENABLE 1
 #define DISABLE 0
@@ -22,6 +22,7 @@ void assert_failed(uint8_t *file, uint8_t line);
 
 #define AHB1PERIPH_BASEADDR			0x40020000UL
 #define APB2PERIPH_BASEADDR			0x40010000UL
+#define APB1PERIPH_BASEADDR			0x40000000UL
 #define APB1PERIPH_BASEADDR			0x40000000UL
 
 /*----------------------- GPIO ----------------------------------*/
@@ -53,9 +54,30 @@ void assert_failed(uint8_t *file, uint8_t line);
 
 #define NVIC_IPR_BASEADDR			0XE000E400UL
 #define IRQ_EXTI15_10				40
+#define IRQ_TIM6_DAC				54
+#define IRQ_TIM2					28
 
 /* ------------------------ POWER CONTROLLER ----------------------------------- */
 #define PWR_BASEADDR				(AHB1PERIPH_BASEADDR + 0x7000)
+
+
+/*			Timers APB2					*/
+#define TIM1_BASEADDR           (APB2PERIPH_BASEADDR + 0x0000)
+#define TIM8_BASEADDR           (APB2PERIPH_BASEADDR + 0x0400)
+#define TIM9_BASEADDR           (APB2PERIPH_BASEADDR + 0x4000)
+#define TIM10_BASEADDR          (APB2PERIPH_BASEADDR + 0x4400)
+#define TIM11_BASEADDR          (APB2PERIPH_BASEADDR + 0x4800)
+
+/* 			Perifericos APB1 				*/
+#define TIM2_BASEADDR          	(APB1PERIPH_BASEADDR + 0x0000)
+#define TIM3_BASEADDR         	(APB1PERIPH_BASEADDR + 0x0400)
+#define TIM4_BASEADDR          	(APB1PERIPH_BASEADDR + 0x0800)
+#define TIM5_BASEADDR          	(APB1PERIPH_BASEADDR + 0x0C00)
+#define TIM6_BASEADDR          	(APB1PERIPH_BASEADDR + 0x1000)
+#define TIM7_BASEADDR          	(APB1PERIPH_BASEADDR + 0x1400)
+#define TIM12_BASEADDR         	(APB1PERIPH_BASEADDR + 0x1800)
+#define TIM13_BASEADDR         	(APB1PERIPH_BASEADDR + 0x1C00)
+#define TIM14_BASEADDR         	(APB1PERIPH_BASEADDR + 0x2000)
 /* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
@@ -135,6 +157,32 @@ typedef struct{
 	volatile uint32_t CSR;
 }PWR_Reg_Def_t;
 
+/*				Registros timers */
+typedef struct
+{
+  volatile uint32_t CR1;         /*!< TIM control register 1,              Address offset: 0x00 */
+  volatile uint32_t CR2;         /*!< TIM control register 2,              Address offset: 0x04 */
+  volatile uint32_t SMCR;        /*!< TIM slave mode control register,     Address offset: 0x08 */
+  volatile uint32_t DIER;        /*!< TIM DMA/interrupt enable register,   Address offset: 0x0C */
+  volatile uint32_t SR;          /*!< TIM status register,                 Address offset: 0x10 */
+  volatile uint32_t EGR;         /*!< TIM event generation register,       Address offset: 0x14 */
+  volatile uint32_t CCMR1;       /*!< TIM capture/compare mode register 1, Address offset: 0x18 */
+  volatile uint32_t CCMR2;       /*!< TIM capture/compare mode register 2, Address offset: 0x1C */
+  volatile uint32_t CCER;        /*!< TIM capture/compare enable register, Address offset: 0x20 */
+  volatile uint32_t CNT;         /*!< TIM counter register,                Address offset: 0x24 */
+  volatile uint32_t PSC;         /*!< TIM prescaler,                       Address offset: 0x28 */
+  volatile uint32_t ARR;         /*!< TIM auto-reload register,            Address offset: 0x2C */
+  volatile uint32_t RCR;         /*!< TIM repetition counter register,     Address offset: 0x30 */
+  volatile uint32_t CCR1;        /*!< TIM capture/compare register 1,      Address offset: 0x34 */
+  volatile uint32_t CCR2;        /*!< TIM capture/compare register 2,      Address offset: 0x38 */
+  volatile uint32_t CCR3;        /*!< TIM capture/compare register 3,      Address offset: 0x3C */
+  volatile uint32_t CCR4;        /*!< TIM capture/compare register 4,      Address offset: 0x40 */
+  volatile uint32_t BDTR;        /*!< TIM break and dead-time register,    Address offset: 0x44 */
+  volatile uint32_t DCR;         /*!< TIM DMA control register,            Address offset: 0x48 */
+  volatile uint32_t DMAR;        /*!< TIM DMA address for full transfer,   Address offset: 0x4C */
+  volatile uint32_t OR;          /*!< TIM option register,                 Address offset: 0x50 */
+}TIM_RegDef_t;
+
 /* --------------- Definición de periféricos -------------------*/
 /*								GPIO							*/
 #define GPIOA			((GPIO_RegDef_t * ) GPIOA_BASEADDR)
@@ -159,6 +207,23 @@ typedef struct{
 /*							PWR									*/
 #define PWR				((PWR_Reg_Def_t *) PWR_BASEADDR)
 
+/*				Timers 					*/
+#define TIM1		((TIM_RegDef_t *)TIM1_BASEADDR)
+#define TIM2		((TIM_RegDef_t *)TIM2_BASEADDR)
+#define TIM3		((TIM_RegDef_t *)TIM3_BASEADDR)
+#define TIM4		((TIM_RegDef_t *)TIM4_BASEADDR)
+#define TIM5		((TIM_RegDef_t *)TIM5_BASEADDR)
+#define TIM6		((TIM_RegDef_t *)TIM6_BASEADDR)
+#define TIM7		((TIM_RegDef_t *)TIM7_BASEADDR)
+#define TIM8		((TIM_RegDef_t *)TIM8_BASEADDR)
+#define TIM9		((TIM_RegDef_t *)TIM9_BASEADDR)
+#define TIM10		((TIM_RegDef_t *)TIM10_BASEADDR)
+#define TIM11		((TIM_RegDef_t *)TIM11_BASEADDR)
+#define TIM12		((TIM_RegDef_t *)TIM12_BASEADDR)
+#define TIM13		((TIM_RegDef_t *)TIM13_BASEADDR)
+#define TIM14		((TIM_RegDef_t *)TIM14_BASEADDR)
+
+
 /* Habilitar clock de perifericos */
 #define GPIOA_CLCK_EN()		(RCC->AHB1ENR |= (1<<0))
 #define GPIOB_CLCK_EN()		(RCC->AHB1ENR |= (1<<1))
@@ -173,6 +238,23 @@ typedef struct{
 
 #define PWR_CLCK_EN()		(RCC->APB1ENR) |= (1<<28)
 
+#define TIM1_EN_CLK()		(RCC->APB2ENR |= (1 << 0))
+#define TIM8_EN_CLK()		(RCC->APB2ENR |= (1 << 1))
+#define TIM9_EN_CLK()		(RCC->APB2ENR |= (1 << 16))
+#define TIM10_EN_CLK()		(RCC->APB2ENR |= (1 << 17))
+#define TIM11_EN_CLK()		(RCC->APB2ENR |= (1 << 18))
+
+#define TIM2_EN_CLK()		(RCC->APB1ENR |= (1 << 0))
+#define TIM3_EN_CLK()		(RCC->APB1ENR |= (1 << 1))
+#define TIM4_EN_CLK()		(RCC->APB1ENR |= (1 << 2))
+#define TIM5_EN_CLK()		(RCC->APB1ENR |= (1 << 3))
+#define TIM6_EN_CLK()		(RCC->APB1ENR |= (1 << 4))
+#define TIM7_EN_CLK()		(RCC->APB1ENR |= (1 << 5))
+#define TIM12_EN_CLK()		(RCC->APB1ENR |= (1 << 6))
+#define TIM13_EN_CLK()		(RCC->APB1ENR |= (1 << 7))
+#define TIM14_EN_CLK()		(RCC->APB1ENR |= (1 << 8))
+
+
 /* Deshabilitar clock perifericos */
 #define GPIOA_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 0))
 #define GPIOB_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 1))
@@ -185,6 +267,23 @@ typedef struct{
 
 #define SYSCFG_CLCK_DIS()	(RCC->APB2ENR &= ~(1<<14))
 
+#define TIM1_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 0))
+#define TIM8_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 1))
+#define TIM9_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 16))
+#define TIM10_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 17))
+#define TIM11_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 18))
+
+#define TIM2_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 0))
+#define TIM3_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 1))
+#define TIM4_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 2))
+#define TIM5_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 3))
+#define TIM6_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 4))
+#define TIM7_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 5))
+#define TIM12_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 6))
+#define TIM13_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 7))
+#define TIM14_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 8))
+
+/*			Reset de perifericos 				*/
 #define GPIOA_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 0)); (RCC->AHB1RSTR &= ~(1 << 0)); } while(0)
 #define GPIOB_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 1)); (RCC->AHB1RSTR &= ~(1 << 1)); } while(0)
 #define GPIOC_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 2)); (RCC->AHB1RSTR &= ~(1 << 2)); } while(0)
@@ -195,6 +294,24 @@ typedef struct{
 #define GPIOH_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); } while(0)
 
 #define SYSCFG_REG_RESET()	 do { (RCC->APB2RSTR |= (1 << 14)); (RCC->APB2RSTR &= ~(1 << 14); }while(0);
+
+#define TIM1_RESET()		do{ RCC->APB2RSTR |= (1 << 0); RCC->APB2RSTR &= ~(1 << 0);}while(0)
+#define TIM8_RESET()		do{ RCC->APB2RSTR |= (1 << 1); RCC->APB2RSTR &= ~(1 << 1);}while(0)
+#define TIM9_RESET()		do{ RCC->APB2RSTR |= (1 << 16); RCC->APB2RSTR &= ~(1 << 16);}while(0)
+#define TIM10_RESET()		do{ RCC->APB2RSTR |= (1 << 17); RCC->APB2RSTR &= ~(1 << 17);}while(0)
+#define TIM11_RESET()		do{ RCC->APB2RSTR |= (1 << 18); RCC->APB2RSTR &= ~(1 << 18);}while(0)
+
+#define TIM2_RESET()		do{ RCC->APB1RSTR |= (1 << 0); RCC->APB1RSTR &= ~(1 << 0);}while(0)
+#define TIM3_RESET()		do{ RCC->APB1RSTR |= (1 << 1); RCC->APB1RSTR &= ~(1 << 1);}while(0)
+#define TIM4_RESET()		do{ RCC->APB1RSTR |= (1 << 2); RCC->APB1RSTR &= ~(1 << 2);}while(0)
+#define TIM5_RESET()		do{ RCC->APB1RSTR |= (1 << 3); RCC->APB1RSTR &= ~(1 << 3);}while(0)
+#define TIM6_RESET()		do{ RCC->APB1RSTR |= (1 << 4); RCC->APB1RSTR &= ~(1 << 4);}while(0)
+#define TIM7_RESET()		do{ RCC->APB1RSTR |= (1 << 5); RCC->APB1RSTR &= ~(1 << 5);}while(0)
+#define TIM12_RESET()		do{ RCC->APB1RSTR |= (1 << 6); RCC->APB1RSTR &= ~(1 << 6);}while(0)
+#define TIM13_RESET()		do{ RCC->APB1RSTR |= (1 << 7); RCC->APB1RSTR &= ~(1 << 7);}while(0)
+#define TIM14_RESET()		do{ RCC->APB1RSTR |= (1 << 8); RCC->APB1RSTR &= ~(1 << 8);}while(0)
+
+
 /* Comprobación número de puerto */
 #define PORT_NUMBER(x)		 ((x==GPIOA) ? 0 : \
 							  (x==GPIOB) ? 1 : \
@@ -252,5 +369,111 @@ typedef struct{
 
 #define PWR_CR_DBP				 8
 
+#define TIM_CR1_CEN              0
+#define TIM_CR1_UDIS             1
+#define TIM_CR1_URS              2
+#define TIM_CR1_OPM              3
+#define TIM_CR1_DIR              4
+#define TIM_CR1_CMS              5
+#define TIM_CR1_ARPE             7
+#define TIM_CR1_CKD              8
+
+#define TIM_CCER_CC1E			 0
+#define TIM_CCER_CC1P			 1
+#define TIM_CCER_CC1NE			 2
+#define TIM_CCER_CC1NP			 3
+#define TIM_CCER_CC2E			 4
+#define TIM_CCER_CC2P			 5
+#define TIM_CCER_CC2NE			 6
+#define TIM_CCER_CC2NP			 7
+#define TIM_CCER_CC3E			 8
+#define TIM_CCER_CC3P			 9
+#define TIM_CCER_CC3NE			10
+#define TIM_CCER_CC3NP			11
+#define TIM_CCER_CC4E			12
+#define TIM_CCER_CC4P			13
+#define TIM_CCER_CC4NP			15
+
+#define TIM_CCMR1_CC1S			 0
+#define TIM_CCMR1_IC1PSC		 2
+#define TIM_CCMR1_IC1F			 4
+#define TIM_CCMR1_CC2S			 8
+#define TIM_CCMR1_IC2PSC		10
+#define TIM_CCMR1_IC2F			12
+
+#define TIM_CCMR1_OC1FE			 2
+#define TIM_CCMR1_OC1PE			 3
+#define TIM_CCMR1_OC1M			 4
+#define TIM_CCMR1_OC1CE			 7
+#define TIM_CCMR1_OC2FE			10
+#define TIM_CCMR1_OC2PE			11
+#define TIM_CCMR1_OC2M			12
+#define TIM_CCMR1_OC2CE			15
+
+#define TIM_CCMR2_CC3S			 0
+#define TIM_CCMR2_IC3PSC		 2
+#define TIM_CCMR2_IC3F			 4
+#define TIM_CCMR2_CC4S			 8
+#define TIM_CCMR2_IC4PSC		10
+#define TIM_CCMR2_IC4F			12
+
+#define TIM_CCMR2_OC3FE			 2
+#define TIM_CCMR2_OC3PE			 3
+#define TIM_CCMR2_OC3M			 4
+#define TIM_CCMR2_OC3CE			 7
+#define TIM_CCMR2_OC4FE			10
+#define TIM_CCMR2_OC4PE			11
+#define TIM_CCMR2_OC4M			12
+#define TIM_CCMR2_OC4CE			15
+
+#define TIM_DIER_UIE			 0
+#define TIM_DIER_CC1IE			 1
+#define TIM_DIER_CC2IE			 2
+#define TIM_DIER_CC3IE			 3
+#define TIM_DIER_CC4IE			 4
+#define TIM_DIER_COMIE			 5
+#define TIM_DIER_TIE			 6
+#define TIM_DIER_BIE			 7
+#define TIM_DIER_UDE			 8
+#define TIM_DIER_CC1DE			 9
+#define TIM_DIER_CC2DE			10
+#define TIM_DIER_CC3DE			11
+#define TIM_DIER_CC4DE			12
+#define TIM_DIER_COMDE			13
+#define TIM_DIER_TDE			14
+
+#define TIM_SR_UIF			 	 0
+#define TIM_SR_CC1IF			 1
+#define TIM_SR_CC2IF			 2
+#define TIM_SR_CC3IF			 3
+#define TIM_SR_CC4IF			 4
+#define TIM_SR_COMIF			 5
+#define TIM_SR_TIF			 	 6
+#define TIM_SR_BIF			 	 7
+#define TIM_SR_CC1OF			 9
+#define TIM_SR_CC2OF			10
+#define TIM_SR_CC3OF			11
+#define TIM_SR_CC4OF			12
+
+#define TIM_SMCR_SMS			 0
+#define TIM_SMCR_TS				 4
+#define TIM_SMCR_MSM			 7
+#define TIM_SMCR_ETF			 8
+#define TIM_SMCR_ETPS			12
+#define TIM_SMCR_ECE			14
+#define TIM_SMCR_ETP			15
+
+#define TIM_CR2_CCDS             3
+#define TIM_CR2_MMS              4
+#define TIM_CR2_TI1S             7
+
+#define TIM_EGR_UG      0    // Update generation
+#define TIM_EGR_CC1G    1    // Capture/Compare 1 generation
+#define TIM_EGR_CC2G    2    // Capture/Compare 2 generation
+#define TIM_EGR_CC3G    3    // Capture/Compare 3 generation
+#define TIM_EGR_CC4G    4    // Capture/Compare 4 generation
+#define TIM_EGR_COMG    5    // Capture/Compare control update generation
+#define TIM_EGR_TG      6    // Trigger generation
+#define TIM_EGR_BG      7    // Break generation
 
 #endif /* DRIVERS_INC_STM32F446XX_H_ */

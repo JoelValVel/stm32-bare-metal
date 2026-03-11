@@ -9,7 +9,7 @@
 #define INC_BUTTON_BOARD_H_
 
 #include "stm32f446xx_gpio.h"
-
+#include "stm32f446xx_nvic.h"
 
 void BUTTON_BOARD_init(void);
 uint8_t BUTTON_BOARD_read(void);

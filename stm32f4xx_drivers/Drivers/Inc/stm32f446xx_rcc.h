@@ -133,9 +133,8 @@ uint32_t RCC_GetSYSCLK(void);
 uint32_t RCC_GetAHBCLK(void);
 uint32_t RCC_GetAPB1CLK(void);
 uint32_t RCC_GetAPB2CLK(void);
-//uint32_t RCC_GetAPB1_TimerCLK(void);
-//uint32_t RCC_GetAPB2_TimerCLK(void);
-
+uint32_t RCC_GetAPB1_TimerCLK(void);
+uint32_t RCC_GetAPB2_TimerCLK(void);
 
 
 
