@@ -30,36 +30,70 @@ void assert_failed(uint8_t *file, uint32_t line)
 	 RCC_SYSCLKConfig(RCC_SYSCLK_HSI);
  }
 
+ /*	180 MHz*/
+// void SYSCLK_PLL_setup(void){
+//	 uint32_t PLLM, PLLN, PLLQ, PLLR, PLLP;
+//	 PLLM = 8;
+//	 PLLN = 336;
+//	 PLLP = 2;
+//	 PLLQ = 7;
+//	 PLLR = 5;
+//
+//	 //Configurar el APB1 y APB2
+//	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4);
+//	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2);
+//	 // Habilitar HSE
+//	 RCC_HSEConfig(RCC_HSE_ON);
+//
+//	 // Esperar a que HSE esté ok
+//	 RCC_WaitForCLKRDY(RCC_Clock_HSE);
+//
+//	 // Configurar el PLL
+//	 RCC_PLLConfig(RCC_PLL_Source_HSE, PLLM, PLLN, PLLP, PLLQ, PLLR);
+//
+//	 // Habilitar PLL
+//	 RCC_PLLCmd(ENABLE);
+//
+//	 // ESperar a que esté ok
+//	 RCC_WaitForCLKRDY(RCC_Clock_PLL);
+//
+//	 // Flash latency
+//	 *((volatile uint32_t *) 0x40023C00) = 0x05;
+//
+//	 // Seleccionar PLL como reloj
+//	 RCC_SYSCLKConfig(RCC_SYSCLK_PLL_P);
+// }
+
+ /*	150 MHz*/
  void SYSCLK_PLL_setup(void){
-	 uint32_t PLLM, PLLN, PLLQ, PLLR, PLLP;
-	 PLLM = 8;
-	 PLLN = 336;
-	 PLLP = 2;
-	 PLLQ = 7;
-	 PLLR = 5;
+ 	 uint32_t PLLM, PLLN, PLLQ, PLLR, PLLP;
+ 	 PLLM = 4;
+ 	 PLLN = 150;
+ 	 PLLP = 2;
+ 	 PLLQ = 8;
+ 	 PLLR = 2;
 
-	 //Configurar el APB1 y APB2
-	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4);
-	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2);
-	 // Habilitar HSE
-	 RCC_HSEConfig(RCC_HSE_ON);
+ 	 //Configurar el APB1 y APB2
+ 	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4);
+ 	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2);
+ 	 // Habilitar HSE
+ 	 RCC_HSEConfig(RCC_HSE_ON);
 
-	 // Esperar a que HSE esté ok
-	 RCC_WaitForCLKRDY(RCC_Clock_HSE);
+ 	 // Esperar a que HSE esté ok
+ 	 RCC_WaitForCLKRDY(RCC_Clock_HSE);
 
-	 // Configurar el PLL
-	 RCC_PLLConfig(RCC_PLL_Source_HSE, PLLM, PLLN, PLLP, PLLQ, PLLR);
+ 	 // Configurar el PLL
+ 	 RCC_PLLConfig(RCC_PLL_Source_HSE, PLLM, PLLN, PLLP, PLLQ, PLLR);
 
-	 // Habilitar PLL
-	 RCC_PLLCmd(ENABLE);
+ 	 // Habilitar PLL
+ 	 RCC_PLLCmd(ENABLE);
 
-	 // ESperar a que esté ok
-	 RCC_WaitForCLKRDY(RCC_Clock_PLL);
+ 	 // ESperar a que esté ok
+ 	 RCC_WaitForCLKRDY(RCC_Clock_PLL);
 
-	 // Flash latency
-	 *((volatile uint32_t *) 0x40023C00) = 0x05;
+ 	 // Flash latency
+ 	 *((volatile uint32_t *) 0x40023C00) = 0x04;
 
-	 // Seleccionar PLL como reloj
-	 RCC_SYSCLKConfig(RCC_SYSCLK_PLL_P);
- }
-
+ 	 // Seleccionar PLL como reloj
+ 	 RCC_SYSCLKConfig(RCC_SYSCLK_PLL_P);
+  }

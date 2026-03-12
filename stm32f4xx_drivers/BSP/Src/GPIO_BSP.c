@@ -64,10 +64,9 @@ GPIO_Init(&TIM2_CH1);
 }
 
 
-
+GPIO_handle_t PC10_debug = {0};
 void RCC_debug_GPIO_setup(void)
 {
-	GPIO_handle_t PC10_debug = {0};
 	PC10_debug.pGPIOx = GPIOC;
 	PC10_debug.GPIO_config.GPIO_pin = GPIO_PIN_10;
 	PC10_debug.GPIO_config.GPIO_Mode = GPIO_Mode_OUT;
@@ -75,6 +74,10 @@ void RCC_debug_GPIO_setup(void)
 	PC10_debug.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
 	PC10_debug.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
 	GPIO_Init(&PC10_debug);
+}
+void RCC_debug_GPIO_Toggle(void)
+{
+	GPIO_TogglePin(PC10_debug.pGPIOx, PC10_debug.GPIO_config.GPIO_pin);
 }
 
 void TIM2_OC_4Channels_GPIO_Setup(void)

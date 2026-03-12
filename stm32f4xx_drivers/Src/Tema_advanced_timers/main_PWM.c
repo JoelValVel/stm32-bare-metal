@@ -29,6 +29,7 @@ int main(void)
 			(dutycycle > 100) ? (dutycycle = 0): (void)0;
 
 		CCR1_pulse = (dutycycle *(h_tim2.TIM_TimeBase.TIM_Period + 1))/100;
+		// actualiza el dutycycle al cambiar el CCRx
 		TIM_SetCompare(h_tim2.pTIMx, TIM_CH1, CCR1_pulse);
 		}
 	}

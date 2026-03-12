@@ -59,7 +59,17 @@ void assert_failed(uint8_t *file, uint32_t line);
 
 /* ------------------------ POWER CONTROLLER ----------------------------------- */
 #define PWR_BASEADDR				(AHB1PERIPH_BASEADDR + 0x7000)
+/* --------------------------- SYSTICK -------------------------------------------*/
+#define SYSTICK_BASEADDR		0xE000E010UL
 
+typedef struct {
+	volatile uint32_t CSR;
+	volatile uint32_t RVR;
+	volatile uint32_t CVR;
+	volatile uint32_t CALIB;
+}Systick_RegDef_t;
+
+#define SYSTICK			((Systick_RegDef_t *)SYSTICK_BASEADDR)
 
 /*			Timers APB2					*/
 #define TIM1_BASEADDR           (APB2PERIPH_BASEADDR + 0x0000)
@@ -475,5 +485,14 @@ typedef struct
 #define TIM_EGR_COMG    5    // Capture/Compare control update generation
 #define TIM_EGR_TG      6    // Trigger generation
 #define TIM_EGR_BG      7    // Break generation
+
+#define SYSTICK_CSR_ENABLE		 0
+#define SYSTICK_CSR_TICKINT		 1
+#define SYSTICK_CSR_CLKSOURCE	 2
+#define SYSTICK_CSR_COUNTFLAG	16
+
+#define SYSTICK_CALIB_TENMS		 0
+#define SYSTICK_CALIB_SKEW		30
+#define SYSTICK_CALIB_NOREF		31
 
 #endif /* DRIVERS_INC_STM32F446XX_H_ */

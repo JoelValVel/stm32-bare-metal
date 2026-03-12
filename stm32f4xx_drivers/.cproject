@@ -79,15 +79,15 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.116187018" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1561512537.1933563408" name="main_PWM_Meas.c" rcbsApplicability="disable" resourcePath="Src/Tema_advanced_timers/main_PWM_Meas.c" toolsToInvoke="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793.405176878">
-						<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793.405176878" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793"/>
+					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1561512537.1530386349" name="main_systick_delay.c" rcbsApplicability="disable" resourcePath="Src/Tema_systick/main_systick_delay.c" toolsToInvoke="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793.1036650360">
+						<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793.1036650360" name="MCU/MPU GCC Compiler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.733493793"/>
 					</fileInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="APP"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="BSP"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Inc"/>
-						<entry excluding="Tema_advanced_timers/main_PWM_Meas.c|Tema_advanced_timers/main_PWM.c|Tema_advanced_timers/main_OC4CH.c|Tema_advanced_timers/main_OC_LEDBOARD.c|Tema_advanced_timers/main_IC.c|Tema_basic_timers/main_IT.c|Tema_basic_timers/main_polling.c|Tema_reloj/main.c|Tema_interrupciones" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
+						<entry excluding="Tema_systick/main_systick_delay.c|Tema_systick/main_systick_meas.c|Tema_advanced_timers/main_REncoder.c|Tema_advanced_timers/main_PWM_Meas.c|Tema_advanced_timers/main_PWM.c|Tema_advanced_timers/main_OC4CH.c|Tema_advanced_timers/main_OC_LEDBOARD.c|Tema_advanced_timers/main_IC.c|Tema_basic_timers/main_IT.c|Tema_basic_timers/main_polling.c|Tema_reloj/main.c|Tema_interrupciones" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Startup"/>
 					</sourceEntries>
 				</configuration>
