@@ -74,8 +74,8 @@ void assert_failed(uint8_t *file, uint32_t line)
  	 PLLR = 2;
 
  	 //Configurar el APB1 y APB2
- 	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4);
- 	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2);
+ 	 RCC_APB1CLKConfig(RCC_APB_Prescaler_4); // 37.5MHz
+ 	 RCC_APB2CLKConfig(RCC_APB_Prescaler_2); // 75 MHz
  	 // Habilitar HSE
  	 RCC_HSEConfig(RCC_HSE_ON);
 

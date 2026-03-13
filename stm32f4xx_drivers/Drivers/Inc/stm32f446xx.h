@@ -88,6 +88,10 @@ typedef struct {
 #define TIM12_BASEADDR         	(APB1PERIPH_BASEADDR + 0x1800)
 #define TIM13_BASEADDR         	(APB1PERIPH_BASEADDR + 0x1C00)
 #define TIM14_BASEADDR         	(APB1PERIPH_BASEADDR + 0x2000)
+
+#define IWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x3000)
+
+#define WWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x2C00)
 /* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
@@ -193,6 +197,21 @@ typedef struct
   volatile uint32_t OR;          /*!< TIM option register,                 Address offset: 0x50 */
 }TIM_RegDef_t;
 
+
+typedef struct {
+	volatile uint32_t KR;
+	volatile uint32_t PR;
+	volatile uint32_t RLR;
+	volatile uint32_t SR;
+}IWDG_RegDef_t;
+
+typedef struct {
+	volatile uint32_t CR;
+	volatile uint32_t CFR;
+	volatile uint32_t SR;
+}WWDG_RegDef_t;
+
+
 /* --------------- Definición de periféricos -------------------*/
 /*								GPIO							*/
 #define GPIOA			((GPIO_RegDef_t * ) GPIOA_BASEADDR)
@@ -233,6 +252,9 @@ typedef struct
 #define TIM13		((TIM_RegDef_t *)TIM13_BASEADDR)
 #define TIM14		((TIM_RegDef_t *)TIM14_BASEADDR)
 
+#define IWDG		((IWDG_RegDef_t *)IWDG_BASEADDR)
+
+#define WWDG		((WWDG_RegDef_t *)WWDG_BASEADDR)
 
 /* Habilitar clock de perifericos */
 #define GPIOA_CLCK_EN()		(RCC->AHB1ENR |= (1<<0))
@@ -264,6 +286,8 @@ typedef struct
 #define TIM13_EN_CLK()		(RCC->APB1ENR |= (1 << 7))
 #define TIM14_EN_CLK()		(RCC->APB1ENR |= (1 << 8))
 
+#define WWDG_EN_CLK()		(RCC->APB1ENR |= (1 << 11))
+
 
 /* Deshabilitar clock perifericos */
 #define GPIOA_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 0))
@@ -293,6 +317,7 @@ typedef struct
 #define TIM13_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 7))
 #define TIM14_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 8))
 
+#define WWDG_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 11))
 /*			Reset de perifericos 				*/
 #define GPIOA_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 0)); (RCC->AHB1RSTR &= ~(1 << 0)); } while(0)
 #define GPIOB_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 1)); (RCC->AHB1RSTR &= ~(1 << 1)); } while(0)
@@ -321,6 +346,7 @@ typedef struct
 #define TIM13_RESET()		do{ RCC->APB1RSTR |= (1 << 7); RCC->APB1RSTR &= ~(1 << 7);}while(0)
 #define TIM14_RESET()		do{ RCC->APB1RSTR |= (1 << 8); RCC->APB1RSTR &= ~(1 << 8);}while(0)
 
+#define WWDG_RESET()		do{ RCC->APB1RSTR |= (1 << 11); RCC->APB1RSTR &= ~(1 << 11);}while(0)
 
 /* Comprobación número de puerto */
 #define PORT_NUMBER(x)		 ((x==GPIOA) ? 0 : \
@@ -494,5 +520,14 @@ typedef struct
 #define SYSTICK_CALIB_TENMS		 0
 #define SYSTICK_CALIB_SKEW		30
 #define SYSTICK_CALIB_NOREF		31
+
+#define WWDG_CR_T				 0
+#define WWDG_CR_WDGA			 7
+
+#define WWDG_CFR_W				 0
+#define WWDG_CFR_WDGTB			 7
+#define WWDG_CFR_EWI			 9
+
+#define WWDG_SR_EWIF			 0
 
 #endif /* DRIVERS_INC_STM32F446XX_H_ */
