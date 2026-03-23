@@ -91,7 +91,7 @@ void GPIO_Init(GPIO_handle_t *pGPIO_handle){
 		regidx = pGPIO_handle->GPIO_config.GPIO_pin / 4;
 		blkidx = pGPIO_handle->GPIO_config.GPIO_pin % 4;
 		SYSCFG->EXTICR[regidx] &= ~(0x0f<<(blkidx*4));
-		SYSCFG->EXTICR[regidx] |= ~(PORT_NUMBER(pGPIO_handle->pGPIOx)<<(blkidx*4));
+		SYSCFG->EXTICR[regidx] |= (PORT_NUMBER(pGPIO_handle->pGPIOx)<<(blkidx*4));
 
 		// Desenmascara la interrupcion EXTI
 		EXTI->IMR |= (1<<pGPIO_handle->GPIO_config.GPIO_pin);
@@ -119,7 +119,7 @@ void GPIO_Init(GPIO_handle_t *pGPIO_handle){
 		blkidx = pGPIO_handle->GPIO_config.GPIO_pin % 8;
 
 		pGPIO_handle->pGPIOx->AFR[regidx] &= ~(0x0f<<(blkidx*4));
-		pGPIO_handle->pGPIOx->AFR[regidx] |= ~(pGPIO_handle->GPIO_config.GPIO_AltFun<<(blkidx*4));
+		pGPIO_handle->pGPIOx->AFR[regidx] |= (pGPIO_handle->GPIO_config.GPIO_AltFun<<(blkidx*4));
 	}
 };
 

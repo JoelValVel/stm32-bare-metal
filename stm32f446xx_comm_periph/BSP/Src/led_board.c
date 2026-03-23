@@ -10,6 +10,7 @@ void LED_BOARD_init(void){
 	LED_BOARD.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
 	LED_BOARD.GPIO_config.GPIO_Speed = GPIO_Speed_LS;
 	GPIO_Init(&LED_BOARD);
+	GPIO_WritePin(LED_BOARD.pGPIOx,LED_BOARD.GPIO_config.GPIO_pin, 0);
 }
 
 void LED_BOARD_toggle(void){

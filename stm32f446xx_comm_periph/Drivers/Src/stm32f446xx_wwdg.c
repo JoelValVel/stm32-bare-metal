@@ -28,7 +28,7 @@ void WWDG_Init(WWDG_Config_t *WWDG_Config)
 
 void WWDG_Deinit(void)
 {
-	WWDG_RESET();
+	//WWDG_RESET();
 }
 
 void WWDG_cmd(uint8_t status)

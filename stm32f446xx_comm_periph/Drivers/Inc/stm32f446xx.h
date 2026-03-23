@@ -23,7 +23,6 @@ void assert_failed(uint8_t *file, uint32_t line);
 #define AHB1PERIPH_BASEADDR			0x40020000UL
 #define APB2PERIPH_BASEADDR			0x40010000UL
 #define APB1PERIPH_BASEADDR			0x40000000UL
-#define APB1PERIPH_BASEADDR			0x40000000UL
 
 /*----------------------- GPIO ----------------------------------*/
 #define GPIOA_BASEADDR				(AHB1PERIPH_BASEADDR + 0x0000)
@@ -51,25 +50,10 @@ void assert_failed(uint8_t *file, uint32_t line);
 #define NVIC_ICER0					(*((volatile uint32_t *)0xE000E180UL))
 #define NVIC_ICER1					(*((volatile uint32_t *)0xE000E184UL))
 #define NVIC_ICER2					(*((volatile uint32_t *)0xE000E188UL))
-
-#define NVIC_IPR_BASEADDR			0XE000E400UL
-#define IRQ_EXTI15_10				40
-#define IRQ_TIM6_DAC				54
-#define IRQ_TIM2					28
-
 /* ------------------------ POWER CONTROLLER ----------------------------------- */
 #define PWR_BASEADDR				(AHB1PERIPH_BASEADDR + 0x7000)
 /* --------------------------- SYSTICK -------------------------------------------*/
 #define SYSTICK_BASEADDR		0xE000E010UL
-
-typedef struct {
-	volatile uint32_t CSR;
-	volatile uint32_t RVR;
-	volatile uint32_t CVR;
-	volatile uint32_t CALIB;
-}Systick_RegDef_t;
-
-#define SYSTICK			((Systick_RegDef_t *)SYSTICK_BASEADDR)
 
 /*			Timers APB2					*/
 #define TIM1_BASEADDR           (APB2PERIPH_BASEADDR + 0x0000)
@@ -92,6 +76,54 @@ typedef struct {
 #define IWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x3000)
 
 #define WWDG_BASEADDR			(APB1PERIPH_BASEADDR + 0x2C00)
+
+/*------------------------------------ SPI ---------------------------------- */
+#define SPI1_BASEADDR					(APB2PERIPH_BASEADDR + 0x3000)
+#define SPI2_I2S2_BASEADDR				(APB1PERIPH_BASEADDR + 0x3800)
+#define SPI3_I2S3_BASEADDR				(APB1PERIPH_BASEADDR + 0x3C00)
+#define SPI4_BASEADDR					(APB2PERIPH_BASEADDR + 0x3400)
+
+#define I2C1_BASEADDR					(APB1PERIPH_BASEADDR + 0x5400)
+#define I2C2_BASEADDR					(APB1PERIPH_BASEADDR + 0x5800)
+#define I2C3_BASEADDR					(APB1PERIPH_BASEADDR + 0x5C00)
+
+#define USART1_BASEADDR					(APB2PERIPH_BASEADDR + 0x1000)
+#define USART2_BASEADDR					(APB1PERIPH_BASEADDR + 0x4400)
+#define USART3_BASEADDR					(APB1PERIPH_BASEADDR + 0x4800)
+#define UART4_BASEADDR					(APB1PERIPH_BASEADDR + 0x4C00)
+#define UART5_BASEADDR					(APB1PERIPH_BASEADDR + 0x5000)
+#define USART6_BASEADDR					(APB2PERIPH_BASEADDR + 0x1400)
+
+
+#define NVIC_IPR_BASEADDR			0XE000E400UL
+#define IRQ_EXTI15_10				40
+#define IRQ_TIM6_DAC				54
+#define IRQ_TIM2					28
+
+#define IRQ_SPI1       35  // SPI1 global interrupt
+#define IRQ_SPI2       36  // SPI2 global interrupt
+#define IRQ_SPI3       51  // SPI3 global interrupt
+#define IRQ_SPI4       84  // SPI4 global interrupt
+
+#define IRQ_I2C1_EV		31  // I2C1 global interrupt
+#define IRQ_I2C1_ER		32  // I2C2 global interrupt
+#define IRQ_I2C2_EV		33  // I2C3 global interrupt
+#define IRQ_I2C2_ER		34  // I2C4 global interrupt
+#define IRQ_I2C3_EV		72  // I2C3 global interrupt
+#define IRQ_I2C3_ER		73  // I2C4 global interrupt
+
+
+
+typedef struct {
+	volatile uint32_t CSR;
+	volatile uint32_t RVR;
+	volatile uint32_t CVR;
+	volatile uint32_t CALIB;
+}Systick_RegDef_t;
+
+#define SYSTICK			((Systick_RegDef_t *)SYSTICK_BASEADDR)
+
+
 /* ---------------------- REGISTROS GPIO --------------------------*/
 typedef struct {
 	volatile uint32_t MODER;
@@ -212,6 +244,43 @@ typedef struct {
 }WWDG_RegDef_t;
 
 
+typedef struct{
+	volatile uint32_t SPI_CR1;
+	volatile uint32_t SPI_CR2;
+	volatile uint32_t SPI_SR;
+	volatile uint32_t SPI_DR;
+	volatile uint32_t SPI_CRCPR;
+	volatile uint32_t SPI_RXCRCR;
+	volatile uint32_t SPI_TXCRCR;
+	volatile uint32_t SPI_I2SCFGR;
+	volatile uint32_t SPI_I2SPR;
+}SPI_RegDef_t;
+
+
+typedef struct{
+	volatile uint32_t I2C_CR1;
+	volatile uint32_t I2C_CR2;
+	volatile uint32_t I2C_OAR1;
+	volatile uint32_t I2C_OAR2;
+	volatile uint32_t I2C_DR;
+	volatile uint32_t I2C_SR1;
+	volatile uint32_t I2C_SR2;
+	volatile uint32_t I2C_CCR;
+	volatile uint32_t I2C_TRISE;
+	volatile uint32_t I2C_FLTR;
+}I2C_RegDef_t;
+
+
+typedef struct{
+	volatile uint32_t SR;
+	volatile uint32_t DR;
+	volatile uint32_t BRR;
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t CR3;
+	volatile uint32_t GTPR;
+}USART_RegDef_t;
+
 /* --------------- Definición de periféricos -------------------*/
 /*								GPIO							*/
 #define GPIOA			((GPIO_RegDef_t * ) GPIOA_BASEADDR)
@@ -256,6 +325,22 @@ typedef struct {
 
 #define WWDG		((WWDG_RegDef_t *)WWDG_BASEADDR)
 
+#define SPI1 		((SPI_RegDef_t *) SPI1_BASEADDR)
+#define SPI2 		((SPI_RegDef_t *) SPI2_I2S2_BASEADDR)
+#define SPI3 		((SPI_RegDef_t *) SPI3_I2S3_BASEADDR)
+#define SPI4 		((SPI_RegDef_t *) SPI4_BASEADDR)
+
+#define I2C1		((I2C_RegDef_t *) I2C1_BASEADDR)
+#define I2C2		((I2C_RegDef_t *) I2C2_BASEADDR)
+#define I2C3		((I2C_RegDef_t *) I2C3_BASEADDR)
+
+#define USART1		((USART_RegDef_t *) USART1_BASEADDR)
+#define USART2		((USART_RegDef_t *) USART2_BASEADDR)
+#define USART3		((USART_RegDef_t *) USART3_BASEADDR)
+#define UART4		((USART_RegDef_t *) UART4_BASEADDR)
+#define UART5		((USART_RegDef_t *) UART5_BASEADDR)
+#define USART6		((USART_RegDef_t *) USART6_BASEADDR)
+
 /* Habilitar clock de perifericos */
 #define GPIOA_CLCK_EN()		(RCC->AHB1ENR |= (1<<0))
 #define GPIOB_CLCK_EN()		(RCC->AHB1ENR |= (1<<1))
@@ -288,6 +373,22 @@ typedef struct {
 
 #define WWDG_EN_CLK()		(RCC->APB1ENR |= (1 << 11))
 
+#define SPI1_EN_CLK()		(RCC->APB2ENR |= (1 << 12))
+#define SPI2_EN_CLK()		(RCC->APB1ENR |= (1 << 14))
+#define SPI3_EN_CLK()		(RCC->APB1ENR |= (1 << 15))
+#define SPI4_EN_CLK()		(RCC->APB2ENR |= (1 << 13))
+
+#define I2C1_EN_CLK()		(RCC->APB1ENR |= (1 << 21))
+#define I2C2_EN_CLK()		(RCC->APB1ENR |= (1 << 22))
+#define I2C3_EN_CLK()		(RCC->APB1ENR |= (1 << 23))
+
+#define USART1_EN_CLK()		(RCC->APB2ENR |= (1 << 4))
+#define USART2_EN_CLK()		(RCC->APB1ENR |= (1 << 17))
+#define USART3_EN_CLK()		(RCC->APB1ENR |= (1 << 18))
+#define UART4_EN_CLK()		(RCC->APB1ENR |= (1 << 19))
+#define UART5_EN_CLK()		(RCC->APB1ENR |= (1 << 20))
+#define USART6_EN_CLK()		(RCC->APB2ENR |= (1 << 5))
+
 
 /* Deshabilitar clock perifericos */
 #define GPIOA_CLCK_DIS()    (RCC->AHB1ENR &= ~(1 << 0))
@@ -318,6 +419,23 @@ typedef struct {
 #define TIM14_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 8))
 
 #define WWDG_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 11))
+
+#define SPI1_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 12))
+#define SPI2_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 14))
+#define SPI3_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 15))
+#define SPI4_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 13))
+
+#define I2C1_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 21))
+#define I2C2_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 22))
+#define I2C3_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 23))
+
+#define USART1_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 4))
+#define USART2_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 17))
+#define USART3_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 18))
+#define UART4_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 19))
+#define UART5_DIS_CLK()		(RCC->APB1ENR &= ~(1 << 20))
+#define USART6_DIS_CLK()		(RCC->APB2ENR &= ~(1 << 5))
+
 /*			Reset de perifericos 				*/
 #define GPIOA_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 0)); (RCC->AHB1RSTR &= ~(1 << 0)); } while(0)
 #define GPIOB_REG_RESET()    do { (RCC->AHB1RSTR |= (1 << 1)); (RCC->AHB1RSTR &= ~(1 << 1)); } while(0)
@@ -346,7 +464,23 @@ typedef struct {
 #define TIM13_RESET()		do{ RCC->APB1RSTR |= (1 << 7); RCC->APB1RSTR &= ~(1 << 7);}while(0)
 #define TIM14_RESET()		do{ RCC->APB1RSTR |= (1 << 8); RCC->APB1RSTR &= ~(1 << 8);}while(0)
 
-#define WWDG_RESET()		do{ RCC->APB1RSTR |= (1 << 11); RCC->APB1RSTR &= ~(1 << 11);}while(0)
+#define SPI1_RESET()        do{ RCC->APB2RSTR |= (1 << 12); RCC->APB2RSTR &= ~(1 << 12);}while(0)
+#define SPI2_RESET()        do{ RCC->APB1RSTR |= (1 << 14); RCC->APB1RSTR &= ~(1 << 14);}while(0)
+#define SPI3_RESET()        do{ RCC->APB1RSTR |= (1 << 15); RCC->APB1RSTR &= ~(1 << 15);}while(0)
+#define SPI4_RESET()        do{ RCC->APB2RSTR |= (1 << 13); RCC->APB2RSTR &= ~(1 << 13);}while(0)
+
+#define I2C1_RESET()        do{ RCC->APB1RSTR |= (1 << 21); RCC->APB1RSTR &= ~(1 << 21);}while(0)
+#define I2C2_RESET()        do{ RCC->APB1RSTR |= (1 << 22); RCC->APB1RSTR &= ~(1 << 22);}while(0)
+#define I2C3_RESET()        do{ RCC->APB1RSTR |= (1 << 23); RCC->APB1RSTR &= ~(1 << 23);}while(0)
+
+#define USART1_RESET()        do{ RCC->APB2RSTR |= (1 << 4); RCC->APB1RSTR &= ~(1 << 4);}while(0)
+#define USART2_RESET()        do{ RCC->APB1RSTR |= (1 << 17); RCC->APB1RSTR &= ~(1 << 17);}while(0)
+#define USART3_RESET()        do{ RCC->APB1RSTR |= (1 << 18); RCC->APB1RSTR &= ~(1 << 18);}while(0)
+#define UART4_RESET()        do{ RCC->APB1RSTR |= (1 << 19); RCC->APB1RSTR &= ~(1 << 19);}while(0)
+#define UART5_RESET()        do{ RCC->APB1RSTR |= (1 << 20); RCC->APB1RSTR &= ~(1 << 20);}while(0)
+#define USART6_RESET()        do{ RCC->APB2RSTR |= (1 << 5); RCC->APB1RSTR &= ~(1 << 5);}while(0)
+
+
 
 /* Comprobación número de puerto */
 #define PORT_NUMBER(x)		 ((x==GPIOA) ? 0 : \
@@ -529,5 +663,187 @@ typedef struct {
 #define WWDG_CFR_EWI			 9
 
 #define WWDG_SR_EWIF			 0
+
+#define SPI_CR1_CPHA           0
+#define SPI_CR1_CPOL           1
+#define SPI_CR1_MSTR           2
+#define SPI_CR1_BR             3
+#define SPI_CR1_SPE            6
+#define SPI_CR1_LSBFIRST       7
+#define SPI_CR1_SSI            8
+#define SPI_CR1_SSM            9
+#define SPI_CR1_RXONLY         10
+#define SPI_CR1_DFF           11
+#define SPI_CR1_CRCNEXT        12
+#define SPI_CR1_CRCEN          13
+#define SPI_CR1_BIDIOE         14
+#define SPI_CR1_BIDIMODE       15
+
+// SPI1 - Control Register 2 (SPI_CR2)
+#define SPI_CR2_RXDMAEN        0
+#define SPI_CR2_TXDMAEN        1
+#define SPI_CR2_SSOE           2
+#define SPI_CR2_FRF            4
+#define SPI_CR2_ERRIE          5
+#define SPI_CR2_RXNEIE         6
+#define SPI_CR2_TXEIE          7
+
+// SPI1 - Status Register (SPI_SR)
+#define SPI_SR_RXNE            0
+#define SPI_SR_TXE             1
+#define SPI_SR_CHSIDE          2
+#define SPI_SR_UDR             3
+#define SPI_SR_CRCERR          4
+#define SPI_SR_MODF            5
+#define SPI_SR_OVR             6
+#define SPI_SR_BSY             7
+#define SPI_SR_FRE     	       8
+
+#define I2C_CR1_PE          0   // Peripheral enable
+#define I2C_CR1_SMBUS       1   // SMBus mode
+#define I2C_CR1_SMBTYPE     3   // SMBus type
+#define I2C_CR1_ENARP       4   // ARP enable
+#define I2C_CR1_ENPEC       5   // PEC enable
+#define I2C_CR1_ENGC        6   // General call enable
+#define I2C_CR1_NOSTRETCH   7   // Clock stretching disable
+#define I2C_CR1_START       8   // Start generation
+#define I2C_CR1_STOP        9   // Stop generation
+#define I2C_CR1_ACK        10   // Acknowledge enable
+#define I2C_CR1_POS        11   // Acknowledge/PEC position
+#define I2C_CR1_PEC        12   // Packet error checking
+#define I2C_CR1_ALERT      13   // SMBus alert
+#define I2C_CR1_SWRST      15   // Software reset
+
+#define I2C_CR2_FREQ        0   // Peripheral clock frequency [5:0]
+#define I2C_CR2_ITERREN     8   // Error interrupt enable
+#define I2C_CR2_ITEVTEN     9   // Event interrupt enable
+#define I2C_CR2_ITBUFEN    10   // Buffer interrupt enable
+#define I2C_CR2_DMAEN      11   // DMA requests enable
+#define I2C_CR2_LAST       12   // DMA last transfer
+
+#define I2C_OAR1_ADD0       0   // Interface address bit 0 (10-bit mode)
+#define I2C_OAR1_ADD1       1   // Interface address bits [7:1]
+#define I2C_OAR1_ADD8       8   // Interface address bits [9:8] (10-bit mode)
+#define I2C_OAR1_ADDMODE   15   // Addressing mode (0=7bit, 1=10bit)
+
+#define I2C_OAR2_ENDUAL     0   // Dual addressing mode enable
+#define I2C_OAR2_ADD2       1   // Interface address [7:1] en modo dual
+
+#define I2C_SR1_SB          0   // Start bit generated
+#define I2C_SR1_ADDR        1   // Address sent/matched
+#define I2C_SR1_BTF         2   // Byte transfer finished
+#define I2C_SR1_ADD10       3   // 10-bit header sent
+#define I2C_SR1_STOPF       4   // Stop detection (slave)
+#define I2C_SR1_RXNE        6   // Data register not empty
+#define I2C_SR1_TXE         7   // Data register empty
+#define I2C_SR1_BERR        8   // Bus error
+#define I2C_SR1_ARLO        9   // Arbitration lost
+#define I2C_SR1_AF         10   // Acknowledge failure
+#define I2C_SR1_OVR        11   // Overrun/underrun
+#define I2C_SR1_PECERR     12   // PEC error in reception
+#define I2C_SR1_TIMEOUT    14   // Timeout or Tlow error
+#define I2C_SR1_SMBALERT   15   // SMBus alert
+
+
+#define I2C_SR2_MSL         0   // Master/slave (1=master)
+#define I2C_SR2_BUSY        1   // Bus busy
+#define I2C_SR2_TRA         2   // Transmitter/receiver
+#define I2C_SR2_GENCALL     4   // General call address
+#define I2C_SR2_SMBDEFAULT  5   // SMBus device default address
+#define I2C_SR2_SMBHOST     6   // SMBus host header
+#define I2C_SR2_DUALF       7   // Dual flag
+#define I2C_SR2_PEC         8   // Packet error checking register [7:0]
+
+#define I2C_CCR_CCR         0   // Clock control register [11:0]
+#define I2C_CCR_DUTY       14   // Fast mode duty cycle
+#define I2C_CCR_FS         15   // I2C master mode selection (0=standard, 1=fast)
+
+#define I2C_FLTR_DNF        0   // Digital noise filter [3:0]
+#define I2C_FLTR_ANOFF      4   // Analog noise filter OFF
+
+/*===========================================================================
+ * USART — posición de bits por registro
+ * STM32F446RE — Reference Manual RM0390
+ *=========================================================================*/
+
+/*---------------------------------------------------------------------------
+ * SR — Status Register
+ *--------------------------------------------------------------------------*/
+#define USART_SR_PE         0   // Parity error
+#define USART_SR_FE         1   // Framing error
+#define USART_SR_NF         2   // Noise detected flag
+#define USART_SR_ORE        3   // Overrun error
+#define USART_SR_IDLE       4   // IDLE line detected
+#define USART_SR_RXNE       5   // Read data register not empty
+#define USART_SR_TC         6   // Transmission complete
+#define USART_SR_TXE        7   // Transmit data register empty
+#define USART_SR_LBD        8   // LIN break detection flag
+#define USART_SR_CTS        9   // CTS flag
+
+/*---------------------------------------------------------------------------
+ * DR — Data Register
+ *--------------------------------------------------------------------------*/
+#define USART_DR_DR         0   // Data value [8:0]
+
+/*---------------------------------------------------------------------------
+ * BRR — Baud Rate Register
+ *--------------------------------------------------------------------------*/
+#define USART_BRR_DIV_FRAC  0   // Fraction of USARTDIV [3:0]
+#define USART_BRR_DIV_MANT  4   // Mantissa of USARTDIV [15:4]
+
+/*---------------------------------------------------------------------------
+ * CR1 — Control Register 1
+ *--------------------------------------------------------------------------*/
+#define USART_CR1_SBK       0   // Send break
+#define USART_CR1_RWU       1   // Receiver wakeup
+#define USART_CR1_RE        2   // Receiver enable
+#define USART_CR1_TE        3   // Transmitter enable
+#define USART_CR1_IDLEIE    4   // IDLE interrupt enable
+#define USART_CR1_RXNEIE    5   // RXNE interrupt enable
+#define USART_CR1_TCIE      6   // Transmission complete interrupt enable
+#define USART_CR1_TXEIE     7   // TXE interrupt enable
+#define USART_CR1_PEIE      8   // PE interrupt enable
+#define USART_CR1_PS        9   // Parity selection (0=even 1=odd)
+#define USART_CR1_PCE       10  // Parity control enable
+#define USART_CR1_WAKE      11  // Wakeup method
+#define USART_CR1_M         12  // Word length (0=8bit 1=9bit)
+#define USART_CR1_UE        13  // USART enable
+#define USART_CR1_OVER8     15  // Oversampling mode (0=16 1=8)
+
+/*---------------------------------------------------------------------------
+ * CR2 — Control Register 2
+ *--------------------------------------------------------------------------*/
+#define USART_CR2_ADD       0   // Address of USART node [3:0]
+#define USART_CR2_LBDL      5   // LIN break detection length
+#define USART_CR2_LBDIE     6   // LIN break detection interrupt enable
+#define USART_CR2_LBCL      8   // Last bit clock pulse
+#define USART_CR2_CPHA      9   // Clock phase
+#define USART_CR2_CPOL      10  // Clock polarity
+#define USART_CR2_CLKEN     11  // Clock enable
+#define USART_CR2_STOP      12  // STOP bits [13:12] (00=1 01=0.5 10=2 11=1.5)
+#define USART_CR2_LINEN     14  // LIN mode enable
+
+/*---------------------------------------------------------------------------
+ * CR3 — Control Register 3
+ *--------------------------------------------------------------------------*/
+#define USART_CR3_EIE       0   // Error interrupt enable
+#define USART_CR3_IREN      1   // IrDA mode enable
+#define USART_CR3_IRLP      2   // IrDA low-power
+#define USART_CR3_HDSEL     3   // Half-duplex selection
+#define USART_CR3_NACK      4   // Smartcard NACK enable
+#define USART_CR3_SCEN      5   // Smartcard mode enable
+#define USART_CR3_DMAR      6   // DMA enable receiver
+#define USART_CR3_DMAT      7   // DMA enable transmitter
+#define USART_CR3_RTSE      8   // RTS enable
+#define USART_CR3_CTSE      9   // CTS enable
+#define USART_CR3_CTSIE     10  // CTS interrupt enable
+#define USART_CR3_ONEBIT    11  // One sample bit method enable
+
+/*---------------------------------------------------------------------------
+ * GTPR — Guard Time and Prescaler Register
+ *--------------------------------------------------------------------------*/
+#define USART_GTPR_PSC      0   // Prescaler value [7:0]
+#define USART_GTPR_GT       8   // Guard time value [15:8]
+
 
 #endif /* DRIVERS_INC_STM32F446XX_H_ */

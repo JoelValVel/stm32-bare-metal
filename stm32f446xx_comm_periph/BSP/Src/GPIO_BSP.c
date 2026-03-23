@@ -100,3 +100,97 @@ void TIM2_OC_4Channels_GPIO_Setup(void)
 	TIM2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_2;
 	GPIO_Init(&TIM2_PIN);
 }
+
+void SPI1_GPIO_Setup(void)
+{
+	GPIO_handle_t SPI1_PIN = {0};
+	SPI1_PIN.pGPIOx = GPIOA;
+	SPI1_PIN.GPIO_config.GPIO_pin = GPIO_PIN_7;
+	SPI1_PIN.GPIO_config.GPIO_OType = GPIO_OType_PP;
+	SPI1_PIN.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
+	SPI1_PIN.GPIO_config.GPIO_Mode = GPIO_Mode_AF;
+	SPI1_PIN.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
+	SPI1_PIN.GPIO_config.GPIO_AltFun = GPIO_ALTFUN_5;
+
+	// SPI1 MOSI
+	GPIO_Init(&SPI1_PIN);
+
+	// SPI1 MISO
+	SPI1_PIN.GPIO_config.GPIO_pin = GPIO_PIN_6;
+	GPIO_Init(&SPI1_PIN);
+
+	// SPI1 SCK
+	SPI1_PIN.GPIO_config.GPIO_pin = GPIO_PIN_5;
+	GPIO_Init(&SPI1_PIN);
+
+	// SPI1 NSS
+	SPI1_PIN.GPIO_config.GPIO_pin = GPIO_PIN_4;
+	GPIO_Init(&SPI1_PIN);
+
+}
+void SPI2_GPIO_Setup(void)
+{
+	GPIO_handle_t SPI2_PIN = {0};
+	SPI2_PIN.pGPIOx = GPIOB;
+	SPI2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_15;
+	SPI2_PIN.GPIO_config.GPIO_OType = GPIO_OType_PP;
+	SPI2_PIN.GPIO_config.GPIO_PuPd = GPIO_PuPd_NONE;
+	SPI2_PIN.GPIO_config.GPIO_Mode = GPIO_Mode_AF;
+	SPI2_PIN.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
+	SPI2_PIN.GPIO_config.GPIO_AltFun = GPIO_ALTFUN_5;
+
+	// SPI2 MOSI
+	GPIO_Init(&SPI2_PIN);
+
+	// SPI2 MISO
+	SPI2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_14;
+	GPIO_Init(&SPI2_PIN);
+
+	// SPI2 SCK
+	SPI2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_13;
+	GPIO_Init(&SPI2_PIN);
+
+	// SPI2 NSS
+	SPI2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_12;
+	GPIO_Init(&SPI2_PIN);
+
+}
+void I2C2_GPIO_Setup(void)
+{
+	GPIO_handle_t I2C2_PIN = {0};
+	I2C2_PIN.pGPIOx = GPIOB;
+	I2C2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_10;
+	I2C2_PIN.GPIO_config.GPIO_OType = GPIO_OType_OD;
+	I2C2_PIN.GPIO_config.GPIO_PuPd = GPIO_PuPd_UP;
+	I2C2_PIN.GPIO_config.GPIO_Mode = GPIO_Mode_AF;
+	I2C2_PIN.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
+	I2C2_PIN.GPIO_config.GPIO_AltFun = GPIO_ALTFUN_4;
+
+	// I2C SCL
+	GPIO_Init(&I2C2_PIN);
+
+	// SPI2 SDA
+	I2C2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_3;
+	GPIO_Init(&I2C2_PIN);
+}
+
+void USART2_GPIO_Setup(void)
+{
+	GPIO_handle_t USART2_PIN = {0};
+
+	USART2_PIN.pGPIOx = GPIOA;
+	USART2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_2;
+	USART2_PIN.GPIO_config.GPIO_OType = GPIO_OType_PP;
+	USART2_PIN.GPIO_config.GPIO_PuPd = GPIO_PuPd_UP;
+	USART2_PIN.GPIO_config.GPIO_Mode = GPIO_Mode_AF;
+	USART2_PIN.GPIO_config.GPIO_Speed = GPIO_Speed_FS;
+	USART2_PIN.GPIO_config.GPIO_AltFun = GPIO_ALTFUN_7;
+
+	// USART2 TX
+	GPIO_Init(&USART2_PIN);
+
+	// USART2 RX
+	USART2_PIN.GPIO_config.GPIO_pin = GPIO_PIN_3;
+	GPIO_Init(&USART2_PIN);
+
+}

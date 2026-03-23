@@ -8,6 +8,7 @@
 #ifndef INC_BSP_WWDG_H_
 #define INC_BSP_WWDG_H_
 
+#include "stm32f446xx_wwdg.h"
 void WWDG_Setup(void);
 
 extern WWDG_Config_t	WWDG_config;

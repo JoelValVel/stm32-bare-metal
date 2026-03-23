@@ -21,4 +21,8 @@ void TIM2_CH1PWM_GPIO_Init(void);
 void TIM5_CH1IC_GPIO_Init(void);
 void TIM5_CH2_GPIO_Init(void);
 void RCC_debug_GPIO_Toggle(void);
+void SPI1_GPIO_Setup(void);
+void SPI2_GPIO_Setup(void);
+void I2C2_GPIO_Setup(void);
+void USART2_GPIO_Setup(void);
 #endif /* INC_GPIO_BSP_H_ */
