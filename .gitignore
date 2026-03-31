@@ -26,3 +26,7 @@ Thumbs.db
 # --- Archivos específicos de CubeMX ---
 # Se recomienda guardar el .ioc, pero ignorar los reportes temporales
 .mxproject
+
+# --- Carpetas de usuario --- 
+stm32f446xx_can/
+stm32f446xx_nucleo/

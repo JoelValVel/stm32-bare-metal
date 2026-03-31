@@ -1,0 +1,23 @@
+---
+:source:
+  :file: test/test_logic_can.c
+  :dirname: test
+  :basename: test_logic_can.c
+:successes:
+- :test: test_telemetry_decode
+  :line: 10
+  :message: ''
+  :unity_test_time: 0
+- :test: test_telemetry_code
+  :line: 21
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 2
+  :passed: 2
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.08007459999498678
